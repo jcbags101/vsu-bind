@@ -1,63 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListComponent from "./components/ListComponent";
 import Sidebar from "./components/Sidebar";
 import UserInfoCard from "./components/UserInfoCard";
-
-const mockData = [
-  {
-    id: 18,
-    title: "AGRONOMIC RESPONSE AND POTASSIUM UPTAKE OF DIFFERENT POT...",
-    status: "Binding",
-    name: "Judy Lee Baguinang",
-    studentNumber: "21-1-00300",
-    email: "21-1-00300@vsu.edu.ph",
-    courseCode: "BSCS",
-    appointmentDate: "January 13, 2023",
-    copies: 4,
-    remarks: "Awaiting review",
-    amount: 600,
-  },
-  {
-    id: 19,
-    title: "SUMMER BRIDGE PROGRAM: A REMOTE ON-THE-JOB TRAINING AT AL...",
-    status: "Binding",
-    name: "Alex Johnson",
-    studentNumber: "21-1-00456",
-    email: "21-1-00456@vsu.edu.ph",
-    courseCode: "BSIT",
-    appointmentDate: "February 20, 2023",
-    copies: 2,
-    remarks: "Needs revision",
-    amount: 300,
-  },
-  {
-    id: 20,
-    title: "EXPLORING ABC-NET ARCHITECTURE FOR LAND COVER SEMANTIC S...",
-    status: "Submitted",
-    name: "Maria Garcia",
-    studentNumber: "21-1-00789",
-    email: "21-1-00789@vsu.edu.ph",
-    courseCode: "BSEE",
-    appointmentDate: "March 5, 2023",
-    copies: 3,
-    remarks: "Under review",
-    amount: 450,
-  },
-  {
-    id: 21,
-    title: "PERFORMANCE OF TRADITIONAL UPLAND RICE (Oryza sativa L.) VARIE...",
-    status: "Pending",
-    name: "Ethan Wright",
-    studentNumber: "21-1-01234",
-    email: "21-1-01234@vsu.edu.ph",
-    courseCode: "BSAG",
-    appointmentDate: "April 10, 2023",
-    copies: 5,
-    remarks: "Pending approval",
-    amount: 750,
-  },
-  // ... Add more items as needed
-];
+import { createTransaction, fetchTransactions } from "./api/transactions";
 
 const userInfoData = {
   id: 20,
@@ -81,8 +26,20 @@ const userInfoData = {
 };
 
 function App() {
+  const [transactions, setTransactions] = useState([]);
   const [showUserInfo, setShowUserInfo] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const getTransactions = async () => {
+    const transactions = await fetchTransactions();
+
+    console.log("Fetched transactions:", transactions);
+    setTransactions(transactions);
+  };
+
+  useEffect(() => {
+    getTransactions(); // Fetch transactions from the database
+  }, []);
 
   const handleOpen = (item) => () => {
     console.log("Opening item:", item);
@@ -90,11 +47,17 @@ function App() {
     setShowUserInfo(true);
   };
 
+  const hadnleClose = () => {
+    setShowUserInfo(false);
+  };
+
   return (
     <div className="flex flex-row w-full bg-gray-200">
       <Sidebar />
-      <ListComponent items={mockData} handleOpenItem={handleOpen} />
-      {showUserInfo && <UserInfoCard userInfo={selectedItem} />}
+      <ListComponent items={transactions} handleOpenItem={handleOpen} />
+      {showUserInfo && (
+        <UserInfoCard userInfo={selectedItem} onClose={hadnleClose} />
+      )}
     </div>
   );
 }

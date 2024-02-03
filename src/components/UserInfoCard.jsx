@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../assets/logo.png"; //
 
-const UserInfoCard = ({ userInfo }) => {
+const UserInfoCard = ({ userInfo, onClose }) => {
   const {
     id,
     name,
@@ -14,15 +14,24 @@ const UserInfoCard = ({ userInfo }) => {
     remarks,
     amount,
     status,
-    onStatusChange,
-    onGenerateBindingOrder,
-    onGenerateAcknowledgementReceipt,
-    onExportPDF,
-    onExportDOCX,
   } = userInfo;
 
+  const [currentStatus, setCurrentStatus] = useState(status);
+
+  const onStatusChange = (newStatus) => {
+    setCurrentStatus(newStatus);
+  };
+
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
+    <div className="relative max-w-sm rounded overflow-hidden shadow-lg p-6 bg-white">
+      <button
+        className="absolute top-0 right-0 mt-4 mr-4 text-gray-700 bg-red-100 py-2 px-3 rounded-full hover:bg-gray-3"
+        onClick={onClose}
+      >
+        <strong class="text-xl align-center cursor-pointer alert-del">
+          &times;
+        </strong>
+      </button>
       <div className="flex flex-col items-center bg-white p-6 shadow rounded-lg">
         <div className="flex justify-center items-center mb-4">
           <div className="rounded-full bg-gray-200 p-4 text-3xl font-semibold">
@@ -91,64 +100,52 @@ const UserInfoCard = ({ userInfo }) => {
           <p>OR ID ---</p>
         </div>
       </div>
-      <div className="flex items-center justify-between mt-4">
+      <div className="flex items-center justify-between mt-4 space-x-2">
         <button
-          className={`rounded-full px-4 py-1 text-sm ${
-            status === "Pending"
-              ? "bg-green-200 text-green-700"
-              : "bg-gray-200 text-gray-700"
-          }`}
+          className={`rounded-full px-4 py-1 text-sm font-semibold shadow-sm ${
+            currentStatus === "Pending"
+              ? "bg-green-500 text-white"
+              : "bg-white text-gray-500"
+          } border border-green-500`}
           onClick={() => onStatusChange("Pending")}
         >
-          Pending
+          {currentStatus === "Pending" ? "✓" : ""} Pending
         </button>
         <button
-          className={`rounded-full px-4 py-1 text-sm ${
-            status === "Submitted"
-              ? "bg-green-200 text-green-700"
-              : "bg-gray-200 text-gray-700"
-          }`}
+          className={`rounded-full px-4 py-1 text-sm font-semibold shadow-sm ${
+            currentStatus === "Submitted"
+              ? "bg-green-500 text-white"
+              : "bg-white text-gray-500"
+          } border border-green-500`}
           onClick={() => onStatusChange("Submitted")}
         >
-          Submitted
+          {currentStatus === "Submitted" ? "✓" : ""} Submitted
         </button>
         <button
-          className={`rounded-full px-4 py-1 text-sm ${
-            status === "Checked"
-              ? "bg-green-200 text-green-700"
-              : "bg-gray-200 text-gray-700"
-          }`}
+          className={`rounded-full px-4 py-1 text-sm font-semibold shadow-sm ${
+            currentStatus === "Checked"
+              ? "bg-green-500 text-white"
+              : "bg-white text-gray-500"
+          } border border-gray-300`}
           onClick={() => onStatusChange("Checked")}
         >
-          Checked
+          {currentStatus === "Checked" ? "✓" : ""} Checked
         </button>
         {/* Add more status buttons as needed */}
       </div>
-      <div className="flex items-center justify-between mt-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={onGenerateBindingOrder}
-        >
+      <div className="flex flex-wrap items-center justify-center mt-4">
+        <button className="bg-gray-500 hover:bg-gray-700 text-white rounded-full px-3 py-2 m-1">
           Generate Binding Order
         </button>
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          onClick={onGenerateAcknowledgementReceipt}
-        >
+        <button className="bg-gray-500 hover:bg-gray-700 text-white rounded-full px-3 py-2 m-1">
           Generate Acknowledgement Receipt
         </button>
       </div>
-      <div className="flex items-center justify-between mt-4">
-        <button
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-          onClick={onExportPDF}
-        >
+      <div className="flex flex-row align-center mt-4">
+        <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center m-2">
           PDF
         </button>
-        <button
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-          onClick={onExportDOCX}
-        >
+        <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center m-2">
           DOCX
         </button>
       </div>
