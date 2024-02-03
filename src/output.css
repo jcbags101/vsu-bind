@@ -485,6 +485,12 @@ video {
   --tw-backdrop-saturate:  ;
   --tw-backdrop-sepia:  ;
 }
+.sticky {
+  position: sticky;
+}
+.top-0 {
+  top: 0px;
+}
 .m-5 {
   margin: 1.25rem;
 }
@@ -530,6 +536,9 @@ video {
 }
 .h-24 {
   height: 6rem;
+}
+.min-h-screen {
+  min-height: 100vh;
 }
 .w-10 {
   width: 2.5rem;

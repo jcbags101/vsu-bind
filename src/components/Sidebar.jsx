@@ -6,7 +6,7 @@ import logo from "../assets/logo.png"; // Adjust the path as necessary
 
 function Sidebar() {
   return (
-    <div className="flex flex-col justify-between h-screen bg-gray-800 w-20">
+    <div className="sticky top-0 flex flex-col justify-between bg-gray-800 w-20 h-screen">
       <div className="flex flex-col items-center">
         <div className="w-full bg-blue-800 p-4">
           <img src={logo} alt="VB Logo" className="h-12 mx-auto" />
