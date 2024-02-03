@@ -1,5 +1,6 @@
 import { addDoc, collection, getDoc, getDocs } from "firebase/firestore";
 import db from "../firebase-config";
+import saveNewDocumentWithNumericId from "./helper";
 
 const fetchTransactions = async () => {
   const transactionsCol = collection(db, "transactions");
@@ -13,14 +14,7 @@ const fetchTransactions = async () => {
 };
 
 const createTransaction = async (transaction) => {
-  const transactionsCol = collection(db, "transactions");
-  const docRef = await addDoc(transactionsCol, transaction);
-  const docSnapshot = await getDoc(docRef);
-
-  return {
-    id: docSnapshot.id,
-    ...docSnapshot.data(),
-  };
+  return saveNewDocumentWithNumericId("transactions", transaction);
 };
 
 export { fetchTransactions, createTransaction };

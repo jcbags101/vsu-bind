@@ -54,7 +54,11 @@ function App() {
   return (
     <div className="flex flex-row w-full bg-gray-200">
       <Sidebar />
-      <ListComponent items={transactions} handleOpenItem={handleOpen} />
+      <ListComponent
+        items={transactions}
+        handleOpenItem={handleOpen}
+        refetch={getTransactions}
+      />
       {showUserInfo && (
         <UserInfoCard userInfo={selectedItem} onClose={hadnleClose} />
       )}

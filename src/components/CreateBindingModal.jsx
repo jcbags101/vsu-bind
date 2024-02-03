@@ -15,7 +15,7 @@ const s = {
   amount: 600,
 };
 
-const CreateBindingModal = ({ isOpen, onClose }) => {
+const CreateBindingModal = ({ isOpen, onClose, refetch }) => {
   const [formData, setFormData] = useState({
     name: "",
     studentNumber: "",
@@ -49,6 +49,7 @@ const CreateBindingModal = ({ isOpen, onClose }) => {
         status: "Pending",
       });
 
+      refetch();
       console.log("Created Transactio", transaction);
     } catch (error) {
       console.error("Error creating transaction", error);

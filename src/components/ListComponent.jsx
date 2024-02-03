@@ -2,7 +2,7 @@ import { useState } from "react";
 import CreateBindingModal from "./CreateBindingModal";
 import ListItem from "./ListItem";
 
-const ListComponent = ({ items, handleOpenItem }) => {
+const ListComponent = ({ items, handleOpenItem, refetch }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleCloseModal = () => {
@@ -37,7 +37,11 @@ const ListComponent = ({ items, handleOpenItem }) => {
         ))}
       </div>
 
-      <CreateBindingModal isOpen={showModal} onClose={handleCloseModal} />
+      <CreateBindingModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        refetch={refetch}
+      />
     </div>
   );
 };
