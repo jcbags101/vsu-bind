@@ -51,6 +51,7 @@ const CreateBindingModal = ({ isOpen, onClose, refetch }) => {
 
       refetch();
       console.log("Created Transactio", transaction);
+      console.log("Refetching transactions");
     } catch (error) {
       console.error("Error creating transaction", error);
     }
